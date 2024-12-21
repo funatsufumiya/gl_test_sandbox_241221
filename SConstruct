@@ -1,7 +1,6 @@
 import os
 import platform
 
-# vcpkgのパスを自動検出
 def find_vcpkg_path():
     possible_paths = [
         os.path.expanduser('~/vcpkg'),
@@ -25,7 +24,6 @@ is_arm64 = platform.machine().startswith('aarch64') or platform.machine().starts
 
 env = Environment()
 
-# コンパイラ設定
 if is_windows:
     env.Append(CXXFLAGS=['/EHsc', '/MD'])
 elif is_mac:
@@ -33,7 +31,6 @@ elif is_mac:
 else:
     env.Append(CXXFLAGS=['-std=c++17'])
 
-# vcpkgが見つかった場合、そのパスを使用
 if vcpkg_path:
     triplet = ''
     if is_windows:
@@ -63,7 +60,6 @@ if vcpkg_path:
         ]
     )
 
-# 必要なライブラリの設定
 if is_windows:
     env.Append(
         LIBS=['opengl32', 'glew32', 'glfw3dll']
